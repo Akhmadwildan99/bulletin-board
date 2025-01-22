@@ -1,0 +1,28 @@
+entity Posts {
+  id Long,
+  author String minlength(10)
+  password String
+  title String maxlength(50)
+  created_date Instant
+  modified_date Instant
+}
+
+entity BodyContent {
+  id Long
+  content TextBlob
+  created_date Instant
+  modified_date Instant
+}
+
+entity Viewers {
+  id Long
+  created_date Instant
+}
+
+relationship OneToOne {
+  Posts to BodyContent
+}
+
+relationship ManyToOne {
+  Viewers to Posts
+}
