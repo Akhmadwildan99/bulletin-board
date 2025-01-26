@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Title Section -->
+            <p class="text-muted" th:text="${post.author}">Author Name</p>
+
+            <!-- Title Section -->
+            <h1 class="mb-4" th:text="${post.title}">Post Title</h1>
+
+            <!-- Body Content Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p class="card-text" th:text="${post.bodyContent.content}">Article content goes here...</p>
+                </div>
+            </div>
+
+            <!-- Buttons Section -->
+            <div class="d-flex justify-content-between">
+                <!-- Edit Button -->
+                <a href="#" class="btn btn-primary" th:href="@{/articles/{id}/edit(id=${post.id})}">Edit</a>
+
+                <!-- Delete Button -->
+                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" style="display:inline;">
+                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" style="display:inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
+                <!-- Back Button -->
+                <a href="#" class="btn btn-secondary" th:href="@{/posts}">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

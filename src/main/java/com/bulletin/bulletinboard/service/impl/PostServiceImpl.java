@@ -1,6 +1,7 @@
 package com.bulletin.bulletinboard.service.impl;
 
 import com.bulletin.bulletinboard.mapper.PostMapper;
+import com.bulletin.bulletinboard.model.Post;
 import com.bulletin.bulletinboard.model.PostSummary;
 import com.bulletin.bulletinboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,10 @@ public class PostServiceImpl implements PostService {
     public List<PostSummary> getPostsSummary(int pageNumber, int pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         return postMapper.getPostSummary(pageSize, offset);
+    }
+
+    @Override
+    public Post getPostById(Long id) {
+        return postMapper.getPostById(id).orElseThrow(() -> new RuntimeException("Post with spescific id does not exist"));
     }
 }

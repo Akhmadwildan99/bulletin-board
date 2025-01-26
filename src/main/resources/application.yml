@@ -22,6 +22,12 @@ spring:
   devtools:
     restart:
       exclude: static/**,public/**
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
 
 
 server:

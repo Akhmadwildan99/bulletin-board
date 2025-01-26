@@ -10,9 +10,9 @@ public class Post {
     private String author;
     private String password;
     private Long views;
-    private Instant createDate;
+    private Instant createdDate;
     private Instant modifiedDate;
-    private BodyContent content;
+    private BodyContent bodyContent;
 
     public Long getId() {
         return id;
@@ -54,20 +54,12 @@ public class Post {
         this.views = views;
     }
 
-    public BodyContent getContent() {
-        return content;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setContent(BodyContent content) {
-        this.content = content;
-    }
-
-    public Instant getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Instant createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Instant getModifiedDate() {
@@ -78,17 +70,24 @@ public class Post {
         this.modifiedDate = modifiedDate;
     }
 
+    public BodyContent getBodyContent() {
+        return bodyContent;
+    }
+
+    public void setBodyContent(BodyContent bodyContent) {
+        this.bodyContent = bodyContent;
+    }
+
     @Override
     public boolean equals(Object o) {
-
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(author, post.author) && Objects.equals(password, post.password) && Objects.equals(views, post.views) && Objects.equals(createDate, post.createDate) && Objects.equals(modifiedDate, post.modifiedDate) && Objects.equals(content, post.content);
+        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(author, post.author) && Objects.equals(password, post.password) && Objects.equals(views, post.views) && Objects.equals(createdDate, post.createdDate) && Objects.equals(modifiedDate, post.modifiedDate) && Objects.equals(bodyContent, post.bodyContent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, password, views, createDate, modifiedDate, content);
+        return Objects.hash(id, title, author, password, views, createdDate, modifiedDate, bodyContent);
     }
 
     @Override
@@ -99,9 +98,9 @@ public class Post {
                 ", author='" + author + '\'' +
                 ", password='" + password + '\'' +
                 ", views=" + views +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
-                ", content=" + content +
+                ", bodyContent=" + bodyContent +
                 '}';
     }
 }
