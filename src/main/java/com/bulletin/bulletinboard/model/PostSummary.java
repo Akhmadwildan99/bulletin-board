@@ -6,9 +6,10 @@ import java.util.Objects;
 public class PostSummary {
     private Long id;
     private String title;
+    private String titleEn;
     private String author;
     private Long views;
-    private Instant createDate;
+    private Instant createdDate;
     private Instant modifiedDate;
 
     public Long getId() {
@@ -45,12 +46,12 @@ public class PostSummary {
         this.views = views;
     }
 
-    public Instant getCreateDate() {
-        return createDate;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Instant createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Instant getModifiedDate() {
@@ -61,16 +62,24 @@ public class PostSummary {
         this.modifiedDate = modifiedDate;
     }
 
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PostSummary that = (PostSummary) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(author, that.author) && Objects.equals(views, that.views) && Objects.equals(createDate, that.createDate) && Objects.equals(modifiedDate, that.modifiedDate);
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(titleEn, that.titleEn) && Objects.equals(author, that.author) && Objects.equals(views, that.views) && Objects.equals(createdDate, that.createdDate) && Objects.equals(modifiedDate, that.modifiedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, views, createDate, modifiedDate);
+        return Objects.hash(id, title, titleEn, author, views, createdDate, modifiedDate);
     }
 
     @Override
@@ -78,9 +87,10 @@ public class PostSummary {
         return "PostSummary{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", titleEn='" + titleEn + '\'' +
                 ", author='" + author + '\'' +
                 ", views=" + views +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 '}';
     }

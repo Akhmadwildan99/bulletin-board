@@ -1,0 +1,1 @@
+ALTER TABLE posts ADD COLUMN title_en VARCHAR(100);

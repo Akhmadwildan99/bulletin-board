@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create or Edit Post</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Create Post</h1>
+
+            <!-- Form Section -->
+            <form action="#" method="post" th:action="@{/posts}" th:object="${post}">
+                <!-- Author Input -->
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" class="form-control" id="author" th:field="*{author}" placeholder="Enter author name" required>
+                </div>
+
+                <!-- Title Input -->
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="titleen">Title English</label>
+                    <input type="text" class="form-control" id="titleen" th:field="*{titleEn}" placeholder="Enter title english" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Enter password" required>
+                </div>
+
+                <!-- Body Content Textarea -->
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea class="form-control" id="content" th:field="*{bodyContent.content}" rows="10" placeholder="Enter content" required></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <!-- Back Button -->
+                <a href="#" class="btn btn-secondary ml-2" th:href="@{/posts}">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

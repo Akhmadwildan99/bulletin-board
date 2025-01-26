@@ -9,9 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -23,12 +22,27 @@ public class PostController {
     @GetMapping("/posts")
     public String getPaginatedPosts(@RequestParam(defaultValue = "1", required = false) int page,
                                         @RequestParam(defaultValue = "5", required = false) int size,
-                                        Model model) {
+                                        Model model, @RequestParam(required = false) String successMessage) {
         List<PostSummary> posts = postService.getPostsSummary(page, size);
         model.addAttribute("posts", posts);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageSize", size);
+        model.addAttribute("successMessage", successMessage);
         return "posts";
+    }
+
+    @PostMapping("/posts")
+    public String createPost(@ModelAttribute Post post) {
+        // Implementasi untuk menyimpan post ke database
+        postService.savePost(post);
+//        redirectAttributes.addFlashAttribute("successMessage", "Post has been successfully added.");
+        return "redirect:/posts?successMessage=Post has been successfully added.";
+    }
+
+    @GetMapping("/posts/new")
+    public String showPostForm(Model model) {
+        model.addAttribute("post", new Post());
+        return "post-create";
     }
 
     @GetMapping("/posts/detail/{id}")

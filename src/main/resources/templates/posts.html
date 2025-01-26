@@ -10,14 +10,40 @@
     </style>
 </head>
 <body>
-    <div class="m-5">
-        <h1 class="mb-4">Posts List</h1>
-        <table class="table">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">List of Posts</h1>
+
+            <!-- Success Modal -->
+            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Success</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p th:text="${successMessage}">Post has been successfully added/edited.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add New Post Button -->
+            <a href="#" class="btn btn-primary mb-4" th:href="@{/posts/new}">Add New Post</a>
+            <table class="table">
             <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">Seq</th>
                 <th scope="col">Author</th>
                 <th scope="col">Title</th>
+                <th scope="col">Title English</th>
                 <th scope="col">Views</th>
             </tr>
             </thead>
@@ -26,6 +52,7 @@
                 <td th:text="${post.id}"></td>
                 <td th:text="${post.author}"></td>
                 <td th:text="${post.title}"></td>
+                <td th:text="${post.titleEn}"></td>
                 <td th:text="${post.views}"></td>
             </tr>
             </tbody>
@@ -40,11 +67,20 @@
                 <li class="page-item"><a class="page-link"  th:href="@{/posts(page=${currentPage + 1}, size=${pageSize})}">Next</a></li>
             </ul>
         </nav>
+        </div>
     </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Trigger Modal on Page Load -->
+<script th:if="${successMessage}">
+    $(document).ready(function() {
+        $('#successModal').modal('show');
+    });
+</script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Post {
     private Long id;
     private String title;
+    private String titleEn;
     private String author;
     private String password;
     private Long views;
@@ -78,16 +79,24 @@ public class Post {
         this.bodyContent = bodyContent;
     }
 
+    public String getTitleEn() {
+        return titleEn;
+    }
+
+    public void setTitleEn(String titleEn) {
+        this.titleEn = titleEn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(author, post.author) && Objects.equals(password, post.password) && Objects.equals(views, post.views) && Objects.equals(createdDate, post.createdDate) && Objects.equals(modifiedDate, post.modifiedDate) && Objects.equals(bodyContent, post.bodyContent);
+        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(titleEn, post.titleEn) && Objects.equals(author, post.author) && Objects.equals(password, post.password) && Objects.equals(views, post.views) && Objects.equals(createdDate, post.createdDate) && Objects.equals(modifiedDate, post.modifiedDate) && Objects.equals(bodyContent, post.bodyContent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, password, views, createdDate, modifiedDate, bodyContent);
+        return Objects.hash(id, title, titleEn, author, password, views, createdDate, modifiedDate, bodyContent);
     }
 
     @Override
@@ -95,6 +104,7 @@ public class Post {
         return "Post{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", titleEn='" + titleEn + '\'' +
                 ", author='" + author + '\'' +
                 ", password='" + password + '\'' +
                 ", views=" + views +

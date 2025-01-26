@@ -16,6 +16,7 @@
 
             <!-- Title Section -->
             <h1 class="mb-4" th:text="${post.title}">Post Title</h1>
+            <h1 class="mb-4" th:text="${post.titleEn}">Post Title</h1>
 
             <!-- Body Content Section -->
             <div class="card mb-4">
@@ -25,19 +26,20 @@
             </div>
 
             <!-- Buttons Section -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <!-- Back Button -->
+                <a href="#" class="btn btn-secondary" th:href="@{/posts}">Back</a>
                 <!-- Edit Button -->
-                <a href="#" class="btn btn-primary" th:href="@{/articles/{id}/edit(id=${post.id})}">Edit</a>
+                <a href="#" class="btn btn-primary ml-2" th:href="@{/articles/{id}/edit(id=${post.id})}">Edit</a>
 
                 <!-- Delete Button -->
-                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" style="display:inline;">
-                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" style="display:inline;">
+                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" class="ml-2" style="display:inline;">
+                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" class="ml-2" style="display:inline;">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
 
-                <!-- Back Button -->
-                <a href="#" class="btn btn-secondary" th:href="@{/posts}">Back</a>
+
             </div>
         </div>
     </div>

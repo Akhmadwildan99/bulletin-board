@@ -1,0 +1,1 @@
+UPDATE posts SET title_en='Title english test 2' where id=1
