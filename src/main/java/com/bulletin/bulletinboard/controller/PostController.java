@@ -54,6 +54,19 @@ public class PostController {
 
     }
 
+    @GetMapping("/posts/view/{id}")
+    public String viewPost(@PathVariable Long id, Model model) {
+        try {
+            postService.saveView(id);
+            return "redirect:/posts/detail/" + id;
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            model.addAttribute("title", "Error!");
+            return "redirect:error";
+        }
+
+    }
+
 
     @GetMapping("/posts/{id}")
     public ResponseEntity<?> getPostById(@PathVariable Long id) {
@@ -73,4 +86,6 @@ public class PostController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 }

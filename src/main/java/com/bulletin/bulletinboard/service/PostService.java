@@ -9,4 +9,5 @@ public interface PostService {
     List<PostSummary> getPostsSummary(int pageNumber, int pageSiz);
     Post getPostById(Long id);
     void savePost(Post post);
+    void saveView(Long id);
 }

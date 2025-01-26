@@ -2,6 +2,7 @@ package com.bulletin.bulletinboard.service.impl;
 
 import com.bulletin.bulletinboard.mapper.BodyContentMapper;
 import com.bulletin.bulletinboard.mapper.PostMapper;
+import com.bulletin.bulletinboard.mapper.ViewerMapper;
 import com.bulletin.bulletinboard.model.Post;
 import com.bulletin.bulletinboard.model.PostSummary;
 import com.bulletin.bulletinboard.service.PostService;
@@ -21,6 +22,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     BodyContentMapper bodyContentMapper;
+
+    @Autowired
+    ViewerMapper viewerMapper;
 
     @Autowired
     private  PasswordEncoder passwordEncoder;
@@ -49,5 +53,12 @@ public class PostServiceImpl implements PostService {
         if(post.getBodyContent() != null) {
             bodyContentMapper.insert(post.getBodyContent(), post.getId());
         }
+    }
+
+    @Override
+    public void saveView(Long id) {
+        postMapper.getPostById(id).ifPresentOrElse((post)-> {
+            viewerMapper.insert(post.getId());
+        }, () -> new RuntimeException("Post with spesific id is not exist!") );
     }
 }

@@ -11,7 +11,8 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
-            <h1 class="mb-4">Create Post</h1>
+            <h1 class="mb-4" th:if="${post.id != null}" th:text="'Edit Post Id: ' + ${post.id}">Edit Post</h1>
+            <h1 class="mb-4" th:if="${post.id == null}">Create Post</h1>
 
             <!-- Form Section -->
             <form action="#" method="post" th:action="@{/posts}" th:object="${post}">
