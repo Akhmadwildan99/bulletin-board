@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +74,24 @@ public class PostServiceImpl implements PostService {
             throw new RuntimeException("Post with spesific id does not exist!");
         }
 
-        if(keyUpdate != null) {}
+        if(keyUpdate == null) {
+            throw new RuntimeException("Update Post does not have permission!");
+        }
+
+        if(Instant.now().isAfter(postCredential.get().getUpdatedKeyDate().plus(1, ChronoUnit.DAYS))  ) {
+            throw new RuntimeException("Update Post key date is expired!");
+        }
+
+        if(!postCredential.get().getUpdatedKey().equals(keyUpdate)) {
+            throw new RuntimeException("Permission is incorrect!");
+        }
+
+
+        postMapper.update(post);
+        if(post.getBodyContent() != null) {
+            bodyContentMapper.update(post.getBodyContent(), post.getId());
+        }
+
     }
 
     @Override

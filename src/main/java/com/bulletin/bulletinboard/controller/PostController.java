@@ -33,17 +33,30 @@ public class PostController {
     }
 
     @PostMapping("/posts")
-    public String createPost(@ModelAttribute Post post) {
+    public String createPost(@ModelAttribute Post post, RedirectAttributes redirectAttributes) {
         // Implementasi untuk menyimpan post ke database
+       try {
+
         postService.savePost(post);
-//        redirectAttributes.addFlashAttribute("successMessage", "Post has been successfully added.");
+    } catch (Exception e) {
+        redirectAttributes.addAttribute("message", e.getMessage());
+        redirectAttributes.addAttribute("title", "Error!");
+        return "redirect:error";
+    }
         return "redirect:/posts?successMessage=Post has been successfully added.";
     }
 
     @GetMapping("/posts/new")
-    public String showPostForm(Model model) {
-        model.addAttribute("post", new Post());
-        return "post-create";
+    public String showPostForm(Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("post", new Post());
+            return "post-create";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+            redirectAttributes.addAttribute("title", "Error!");
+            return "redirect:error";
+        }
+
     }
 
     @GetMapping("/posts/update/{id}")
@@ -63,12 +76,19 @@ public class PostController {
     @GetMapping("/posts/detail/{id}")
     public String getPostDetailById(@PathVariable Long id, Model model) {
 
-        Post post = postService.getPostById(id);
-        model.addAttribute("post", post);
-        PostCredential postCredential = new PostCredential();
-        postCredential.setId(post.getId());
-        model.addAttribute("postCredential",postCredential);
-        return "posts-detail";
+        try {
+            Post post = postService.getPostById(id);
+            model.addAttribute("post", post);
+            PostCredential postCredential = new PostCredential();
+            postCredential.setId(post.getId());
+            model.addAttribute("postCredential",postCredential);
+            return "posts-detail";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            model.addAttribute("title", "Error!");
+            return "redirect:error";
+        }
+
 
     }
 
@@ -100,25 +120,39 @@ public class PostController {
         }
     }
 
-
-    @GetMapping("/posts/{id}")
-    public ResponseEntity<?> getPostById(@PathVariable Long id) {
-
+    @PostMapping("/posts/{id}")
+    public String updatePost(@PathVariable Long id, @ModelAttribute Post post, @RequestParam String updateKey,  RedirectAttributes redirectAttributes) {
         try {
-            Post post = postService.getPostById(id);
-            ApiResponse.Meta meta = new ApiResponse.Meta(HttpStatus.OK.getReasonPhrase(), "Successes to fetch bulletin post", HttpStatus.OK.value());
-            ApiResponse<Post> response = new ApiResponse<>(meta, post);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            ApiResponse.Meta meta = new ApiResponse.Meta(HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage(), HttpStatus.BAD_REQUEST.value());
-            ApiResponse<String> response = new ApiResponse<>(meta, null);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//            post.setId(id);
+            postService.updatePost(post, updateKey);
+
+            return "redirect:/posts?successMessage=Post with id "+ id +" has been successfully updated.";
         } catch (Exception e) {
-            ApiResponse.Meta meta = new ApiResponse.Meta(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
-            ApiResponse<String> response = new ApiResponse<>(meta, null);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            redirectAttributes.addAttribute("message", e.getMessage());
+            redirectAttributes.addAttribute("title", "Error!");
+            return "redirect:error";
         }
     }
+
+
+//    @GetMapping("/posts/{id}")
+//    public ResponseEntity<?> getPostById(@PathVariable Long id) {
+//
+//        try {
+//            Post post = postService.getPostById(id);
+//            ApiResponse.Meta meta = new ApiResponse.Meta(HttpStatus.OK.getReasonPhrase(), "Successes to fetch bulletin post", HttpStatus.OK.value());
+//            ApiResponse<Post> response = new ApiResponse<>(meta, post);
+//            return new ResponseEntity<>(response, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            ApiResponse.Meta meta = new ApiResponse.Meta(HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage(), HttpStatus.BAD_REQUEST.value());
+//            ApiResponse<String> response = new ApiResponse<>(meta, null);
+//            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//            ApiResponse.Meta meta = new ApiResponse.Meta(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+//            ApiResponse<String> response = new ApiResponse<>(meta, null);
+//            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 }

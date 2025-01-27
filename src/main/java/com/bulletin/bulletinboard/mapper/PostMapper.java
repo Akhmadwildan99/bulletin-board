@@ -50,6 +50,12 @@ public interface PostMapper {
    void update(@Param("post") Post post);
 
    @Select("SELECT p.id, p.password, p.updated_key, p.updated_key_date from posts p where p.id = #{id} ")
+   @Results(value = {
+           @Result(property = "id", column = "id"),
+           @Result(property = "password", column = "password"),
+           @Result(property = "updatedKey", column = "updated_key"),
+           @Result(property = "updatedKeyDate", column = "updated_key_date")
+   })
    Optional<PostCredential> getPostCredentialById(@Param("id") Long id);
 
 

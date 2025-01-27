@@ -1,11 +1,12 @@
 package com.bulletin.bulletinboard.model;
 
+import java.time.Instant;
 import java.util.Objects;
 
 public class PostCredential {
     private Long id;
     private String updatedKey;
-    private String updatedKeyDate;
+    private Instant updatedKeyDate;
     private String password;
 
     public Long getId() {
@@ -25,11 +26,11 @@ public class PostCredential {
         this.updatedKey = updatedKey;
     }
 
-    public String getUpdatedKeyDate() {
+    public Instant getUpdatedKeyDate() {
         return updatedKeyDate;
     }
 
-    public void setUpdatedKeyDate(String updatedKeyDate) {
+    public void setUpdatedKeyDate(Instant updatedKeyDate) {
         this.updatedKeyDate = updatedKeyDate;
     }
 
