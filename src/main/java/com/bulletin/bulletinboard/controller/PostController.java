@@ -134,6 +134,18 @@ public class PostController {
         }
     }
 
+    @PostMapping("/posts/soft-delete/{id}")
+    public String deletePost(@PathVariable Long id, @ModelAttribute PostCredential postCredential,RedirectAttributes redirectAttributes) {
+        try {
+            postService.softDeletePost(id, postCredential.getPassword());
+
+            return "redirect:/posts?successMessage=Post with id "+ id +" has been successfully deleted.";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+            redirectAttributes.addAttribute("title", "Error!");
+            return "redirect:error";
+        }
+    }
 
 //    @GetMapping("/posts/{id}")
 //    public ResponseEntity<?> getPostById(@PathVariable Long id) {

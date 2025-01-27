@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface PostMapper {
 
    @Select("SELECT p.id, p.author, p.title, p.title_en ,p.created_date, p.modified_date, COUNT(v.id) AS views from " +
-           "posts p  LEFT JOIN public.viewers v on p.id = v.post_id" +
-           " group by p.id ORDER BY p.id LIMIT #{limit} OFFSET #{offset}  ")
+           "posts p  LEFT JOIN public.viewers v on p.id = v.post_id " +
+           "where p.is_deleted is not true group by p.id ORDER BY p.id LIMIT #{limit} OFFSET #{offset}  ")
    @Results({
            @Result(property = "id", column = "id"),
            @Result(property = "author", column = "author"),
@@ -29,7 +29,7 @@ public interface PostMapper {
 
    @Select("SELECT p.id, p.title,  p.title_en,p.author, p.created_date, p.modified_date, COUNT(v.id) AS views from " +
            "posts p  LEFT JOIN public.viewers v on p.id = v.post_id " +
-           "where p.id = #{id} group by p.id ORDER BY p.id")
+           "where p.id = #{id} and p.is_deleted is not true group by p.id ORDER BY p.id")
    @Results(value = {
            @Result(property = "id", column = "id"),
            @Result(property = "author", column = "author"),
@@ -49,7 +49,7 @@ public interface PostMapper {
    @Update("UPDATE posts SET author= #{post.author}, title= #{post.title}, title_en= #{post.titleEn},  modified_date=now() where id = #{post.id}")
    void update(@Param("post") Post post);
 
-   @Select("SELECT p.id, p.password, p.updated_key, p.updated_key_date from posts p where p.id = #{id} ")
+   @Select("SELECT p.id, p.password, p.updated_key, p.updated_key_date from posts p where p.id = #{id}  and p.is_deleted is not true")
    @Results(value = {
            @Result(property = "id", column = "id"),
            @Result(property = "password", column = "password"),
@@ -61,5 +61,8 @@ public interface PostMapper {
 
    @Update("UPDATE posts SET updated_key= #{postCredential.updatedKey}, updated_key_date= now() where id = #{postCredential.id}")
    void updateKey(@Param("postCredential") PostCredential postCredential);
+
+   @Update("UPDATE posts SET is_deleted= true where id= #{id} ")
+   void deletePostById(@Param("id") Long id);
 
 }

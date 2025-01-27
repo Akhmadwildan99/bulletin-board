@@ -113,5 +113,20 @@ public class PostServiceImpl implements PostService {
         return key;
     }
 
+    @Override
+    public void softDeletePost(Long id, String password) {
+
+        Optional<PostCredential> post = postMapper.getPostCredentialById(id);
+
+        if(!post.isPresent()) {
+            throw new RuntimeException("Post with spesific id does not exist");
+        }
+        if(passwordEncoder.matches(password, post.get().getPassword())) {
+            postMapper.deletePostById(id);
+        } else {
+            throw new RuntimeException("Incorrect password");
+        }
+    }
+
 
 }

@@ -13,4 +13,5 @@ public interface PostService {
 
     void updatePost(Post post, String keyUpdate);
     String generateKeyUpdatePost(Long id,String password);
+    void softDeletePost(Long id, String password);
 }

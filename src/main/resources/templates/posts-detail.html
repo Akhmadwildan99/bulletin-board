@@ -65,12 +65,47 @@
                     </div>
                 </div>
 
+
+                <!-- The Modal -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Change Password</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="deleteForm"  action="#" method="post" th:action="@{/posts/soft-delete/{id}(id=${postCredential.id})}" th:object="${postCredential}">
+                                    <!-- Password Input -->
+                                    <div class="form-group">
+                                        <label for="passwordDelete">Confirm Password</label>
+                                        <input type="password" class="form-control" id="passwordDelete" th:field="*{password}" placeholder="Enter  password" required>
+                                    </div>
+
+
+                                    <!-- Error Message -->
+                                    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('*')}">
+                                        <span th:each="err : ${#fields.errors('*')}" th:text="${err}"></span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Delete Button -->
 
-                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" class="ml-2" style="display:inline;">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+<!--                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" class="ml-2" style="display:inline;">-->
+<!--                    <input type="hidden" name="_method" value="DELETE">-->
+<!--                    <button type="submit" class="btn btn-danger">Delete</button>-->
+                <button  type="button" class="btn btn-danger ml-2"  data-toggle="modal" data-target="#deleteModal">Delete</button>
+<!--                </form>-->
 
 
             </div>
@@ -89,6 +124,10 @@
 <script>
     function submitForm() {
         document.getElementById('passwordForm').submit();
+    }
+
+    function submitDeleteForm() {
+        document.getElementById('deleteForm').submit();
     }
 </script>
 </body>

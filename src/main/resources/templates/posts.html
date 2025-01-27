@@ -45,6 +45,8 @@
                 <th scope="col">Title</th>
                 <th scope="col">Title English</th>
                 <th scope="col">Views</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Modified Date</th>
             </tr>
             </thead>
             <tbody>
@@ -54,6 +56,8 @@
                 <td th:text="${post.title}"></td>
                 <td th:text="${post.titleEn}"></td>
                 <td th:text="${post.views}"></td>
+                <td th:text="${#dates.format(post.createdDate, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#dates.format(post.modifiedDate, 'dd-MM-yyyy')}"></td>
             </tr>
             </tbody>
         </table>
