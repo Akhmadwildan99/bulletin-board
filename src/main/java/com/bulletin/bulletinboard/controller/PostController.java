@@ -2,6 +2,7 @@ package com.bulletin.bulletinboard.controller;
 
 import com.bulletin.bulletinboard.dto.ApiResponse;
 import com.bulletin.bulletinboard.model.Post;
+import com.bulletin.bulletinboard.model.PostCredential;
 import com.bulletin.bulletinboard.model.PostSummary;
 import com.bulletin.bulletinboard.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,28 @@ public class PostController {
         return "post-create";
     }
 
+    @GetMapping("/posts/update/{id}")
+    public String showPostFormUpdate(@PathVariable long id, @RequestParam(required = true) String updateKey, Model model) {
+
+        try {
+            model.addAttribute("post", postService.getPostById(id));
+            model.addAttribute("updateKey", updateKey);
+            return "post-create";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            model.addAttribute("title", "Error!");
+            return "redirect:error";
+        }
+    }
+
     @GetMapping("/posts/detail/{id}")
     public String getPostDetailById(@PathVariable Long id, Model model) {
 
         Post post = postService.getPostById(id);
         model.addAttribute("post", post);
+        PostCredential postCredential = new PostCredential();
+        postCredential.setId(post.getId());
+        model.addAttribute("postCredential",postCredential);
         return "posts-detail";
 
     }
@@ -64,7 +82,22 @@ public class PostController {
             model.addAttribute("title", "Error!");
             return "redirect:error";
         }
+    }
 
+    @PostMapping("/posts/validate-update/{id}")
+    public String validateUpdate(@PathVariable Long id, @ModelAttribute PostCredential postCredential, RedirectAttributes redirectAttributes) {
+
+        try {
+            String keyUpdatePost = postService.generateKeyUpdatePost(id, postCredential.getPassword());
+
+
+
+            return "redirect:/posts/update/"+ id+"?updateKey="+keyUpdatePost;
+        }catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+            redirectAttributes.addAttribute("title", "Error!");
+            return "redirect:error";
+        }
     }
 
 

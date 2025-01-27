@@ -10,4 +10,7 @@ public interface PostService {
     Post getPostById(Long id);
     void savePost(Post post);
     void saveView(Long id);
+
+    void updatePost(Post post, String keyUpdate);
+    String generateKeyUpdatePost(Long id,String password);
 }

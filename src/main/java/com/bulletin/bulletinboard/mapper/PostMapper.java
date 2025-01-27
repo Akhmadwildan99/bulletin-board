@@ -2,6 +2,7 @@ package com.bulletin.bulletinboard.mapper;
 
 import com.bulletin.bulletinboard.model.BodyContent;
 import com.bulletin.bulletinboard.model.Post;
+import com.bulletin.bulletinboard.model.PostCredential;
 import com.bulletin.bulletinboard.model.PostSummary;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
@@ -44,4 +45,15 @@ public interface PostMapper {
    @Insert("INSERT INTO posts  (author, title, title_en,password, created_date) VALUES (#{post.author}, #{post.title},  #{post.titleEn}, #{post.password}, now())")
    @Options(useGeneratedKeys = true, keyProperty = "post.id")
    void insert(@Param("post") Post post);
+
+   @Update("UPDATE posts SET author= #{post.author}, title= #{post.title}, title_en= #{post.titleEn},  modified_date=now() where id = #{post.id}")
+   void update(@Param("post") Post post);
+
+   @Select("SELECT p.id, p.password, p.updated_key, p.updated_key_date from posts p where p.id = #{id} ")
+   Optional<PostCredential> getPostCredentialById(@Param("id") Long id);
+
+
+   @Update("UPDATE posts SET updated_key= #{postCredential.updatedKey}, updated_key_date= now() where id = #{postCredential.id}")
+   void updateKey(@Param("postCredential") PostCredential postCredential);
+
 }

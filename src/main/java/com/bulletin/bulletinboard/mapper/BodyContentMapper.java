@@ -1,10 +1,7 @@
 package com.bulletin.bulletinboard.mapper;
 
 import com.bulletin.bulletinboard.model.BodyContent;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface BodyContentMapper {
@@ -13,4 +10,7 @@ public interface BodyContentMapper {
 
     @Insert("INSERT INTO body_contents (post_id, content, created_date) VALUES (#{postId}, #{bodyContent.content}, now())")
     void insert(@Param("bodyContent") BodyContent bodyContent, @Param("postId") Long postId);
+
+    @Update("UPDATE body_contents SET content=#{bodyContent.content} where id = #{bodyContent.id} and post_id = #{postId}")
+    void update(@Param("bodyContent") BodyContent bodyContent, @Param("postId") Long postId);
 }

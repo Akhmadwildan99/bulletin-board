@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,10 +30,43 @@
                 <!-- Back Button -->
                 <a href="#" class="btn btn-secondary" th:href="@{/posts}">Back</a>
                 <!-- Edit Button -->
-                <a href="#" class="btn btn-primary ml-2" th:href="@{/articles/{id}/edit(id=${post.id})}">Edit</a>
+                <button  type="button" class="btn btn-primary ml-2"  data-toggle="modal" data-target="#passwordModal">Edit</button>
+
+                <!-- The Modal -->
+                <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="passwordModalLabel">Change Password</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="passwordForm"  action="#" method="post" th:action="@{/posts/validate-update/{id}(id=${postCredential.id})}" th:object="${postCredential}">
+                                    <!-- Password Input -->
+                                    <div class="form-group">
+                                        <label for="password">Confirm Password</label>
+                                        <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Enter  password" required>
+                                    </div>
+
+
+                                    <!-- Error Message -->
+                                    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('*')}">
+                                        <span th:each="err : ${#fields.errors('*')}" th:text="${err}"></span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Delete Button -->
-                <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" class="ml-2" style="display:inline;">
+
                 <form action="#" method="post" th:action="@{/articles/{id}(id=${post.id})}" class="ml-2" style="display:inline;">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -45,9 +78,18 @@
     </div>
 </div>
 
+
+
+
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function submitForm() {
+        document.getElementById('passwordForm').submit();
+    }
+</script>
 </body>
 </html>
